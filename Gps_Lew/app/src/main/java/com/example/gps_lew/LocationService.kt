@@ -49,6 +49,7 @@ class LocationService: Service()  {
         return super.onStartCommand(intent, flags, startId)
     }
 
+
     private fun start() {
         val notification = NotificationCompat.Builder(this,"location")
             .setContentTitle("Siguiendote")
@@ -58,7 +59,7 @@ class LocationService: Service()  {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        locationClient.getLocationUpdates(10000L)
+        locationClient.getLocationUpdates(20000L)
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
                 val lat = location.latitude.toString()
@@ -69,7 +70,8 @@ class LocationService: Service()  {
             }
             .launchIn(serviceScope)
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocationService:WakeLock")
+        //wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocationService:WakeLock")
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "LocationService:WakeLock")
         wakeLock?.acquire()
         startForeground(1,notification.build())
     }
@@ -93,7 +95,7 @@ class LocationService: Service()  {
 
     fun enviarDatos(lat:String,lon:String) {
         val url = "http://190.246.216.236:3033/setlocation"
-        val json = "{\"usuario\": \"josey\", \"latitud\": \"${lat}\", \"longitud\": \"${lon}\"}"  // Reemplaza esto con tu información JSON
+        val json = "{\"usuario\": \"hernanv\", \"latitud\": \"${lat}\", \"longitud\": \"${lon}\"}"  // Reemplaza esto con tu información JSON
 
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = json.toRequestBody(mediaType)

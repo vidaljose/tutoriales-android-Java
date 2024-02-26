@@ -48,6 +48,7 @@ class MainActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    /*
                     Button(onClick = { /*TODO*/
                         Intent(applicationContext, LocationService::class.java).apply {
                             action = LocationService.ACTION_STOP
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     }) {
                         Text(text = "STOP")
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp)) */
                 }
             }
         }
