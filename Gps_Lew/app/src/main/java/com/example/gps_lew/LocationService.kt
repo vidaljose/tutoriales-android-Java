@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
@@ -51,8 +52,10 @@ class LocationService: Service()  {
 
 
     private fun start() {
+        val sharedPrefUtil = SharedPrefUtil(applicationContext)
+        val usuario = sharedPrefUtil.getData("user")
         val notification = NotificationCompat.Builder(this,"location")
-            .setContentTitle("Siguiendote")
+            .setContentTitle("Siguiendote ${usuario}")
             .setContentText("Ubicacion: null")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setOngoing(true)
@@ -94,9 +97,11 @@ class LocationService: Service()  {
     }
 
     fun enviarDatos(lat:String,lon:String) {
+        val sharedPrefUtil = SharedPrefUtil(applicationContext)
         val url = "http://190.246.216.236:3033/setlocation"
-        val json = "{\"usuario\": \"hernanv\", \"latitud\": \"${lat}\", \"longitud\": \"${lon}\"}"  // Reemplaza esto con tu información JSON
-
+        val usuario = sharedPrefUtil.getData("user")
+        val json = "{\"usuario\": \"${usuario}\", \"latitud\": \"${lat}\", \"longitud\": \"${lon}\"}"  // Reemplaza esto con tu información JSON
+        Log.e("LocationService", "usuario: ${usuario}")
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val requestBody = json.toRequestBody(mediaType)
 
