@@ -1,4 +1,4 @@
-package com.example.mvvmlogin
+package com.example.navigationarguments
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,21 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mvvmlogin.ui.login.ui.LoginScreen
-import com.example.mvvmlogin.ui.login.ui.LoginViewModel
-import com.example.mvvmlogin.ui.theme.MVVMLoginTheme
+import com.example.navigationarguments.ui.theme.NavigationArgumentsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MVVMLoginTheme {
+            NavigationArgumentsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen(LoginViewModel())
+                    Nav()
                 }
             }
         }
