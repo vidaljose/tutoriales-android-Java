@@ -116,7 +116,7 @@ fun Login(modifier: Modifier,navController: NavHostController, coroutineScope: C
 @Composable
 fun HeaderImage(modifier: Modifier) {
     Image(
-        painter = painterResource(id = R.drawable.observar),
+        painter = painterResource(id = R.drawable.gps_image),
         contentDescription = "Imagen anime",
         modifier = modifier
     )
