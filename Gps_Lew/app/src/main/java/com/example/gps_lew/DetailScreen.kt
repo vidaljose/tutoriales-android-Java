@@ -1,7 +1,9 @@
 package com.example.gps_lew
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.JobIntentService.enqueueWork
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.registerReceiver
 
 
 @Composable
@@ -29,7 +33,11 @@ fun DetailScreen(myName: String?, applicationContext: Context){
             action = LocationService.ACTION_START
             ContextCompat.startForegroundService(LocalContext.current, this)
         }
+
+
     }
+
+
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -43,4 +51,15 @@ fun DetailScreen(myName: String?, applicationContext: Context){
     }
 
 }
+
+fun isLocationServiceRunning(context: Context): Boolean {
+    val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+        if (LocationService::class.java.name == service.service.className) {
+            return true
+        }
+    }
+    return false
+}
+
 

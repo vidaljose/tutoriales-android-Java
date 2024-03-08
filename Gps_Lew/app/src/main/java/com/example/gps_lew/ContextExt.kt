@@ -15,3 +15,4 @@ fun Context.hasLotationPermission(): Boolean{
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
 }
+

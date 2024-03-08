@@ -4,7 +4,9 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import androidx.compose.ui.platform.LocalContext
@@ -14,9 +16,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -39,19 +43,28 @@ class LocationService: Service()  {
             applicationContext,
             LocationServices.getFusedLocationProviderClient(applicationContext)
         )
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when(intent?.action){
-            ACTION_START -> start()
+            ACTION_START -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    start()
+                }
+            }
             ACTION_STOP -> stop()
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
 
-    private fun start() {
+    private suspend fun start() {
+
+        Log.d("LocationService", "Iniciando el servicio...")
+
+        // Introducir un retraso antes de solicitar actualizaciones de ubicación
+        delay(5000) // Retardo de 5 segundos (ajustar según sea necesario)
+
         val sharedPrefUtil = SharedPrefUtil(applicationContext)
         val usuario = sharedPrefUtil.getData("user")
         val notification = NotificationCompat.Builder(this,"location")

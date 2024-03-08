@@ -16,13 +16,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen() {
     val modifier = Modifier
     Column(
         modifier = modifier.fillMaxSize(),
@@ -32,7 +33,7 @@ fun HomeScreen(navController: NavHostController) {
         var nameValue by remember { mutableStateOf("") }
         var ageValue by remember { mutableStateOf("") }
 
-        Text(text = "Home screen", fontSize = 65.sp)
+        Text(text = "Buenos dias", fontSize = 65.sp)
         Spacer(modifier = Modifier.height(65.dp))
 
         TextField(
@@ -56,7 +57,7 @@ fun HomeScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
-                navController.navigate("Details/$nameValue/$ageValue")
+                // navController.navigate("Details/$nameValue/$ageValue")
             }
         ) {
             Text(text = "Pass data", fontSize = 30.sp)

@@ -72,12 +72,12 @@ fun Login(modifier: Modifier,navController: NavHostController, coroutineScope: C
     var isLoading: Boolean by remember { mutableStateOf(false) }
 
     val sharedPrefUtil = SharedPrefUtil(LocalContext.current)
-    /*
+
     if(sharedPrefUtil.getData("user") != null){
         val emailData = sharedPrefUtil.getData("user")
         navController.navigate("Details/$emailData")
     }
-    */
+
 
     if(isLoading){
         Box(Modifier.fillMaxSize()){
